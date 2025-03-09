@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">What Now</string>
+
+    <string name="create_account"><u>Create Account?</u></string>
+    <string name="already_have_account"><u>Already Have An Account?</u></string>
+    <string name="forget_password"><u>Forget Password?</u></string>
+</resources>
