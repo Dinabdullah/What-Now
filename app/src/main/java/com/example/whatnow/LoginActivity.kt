@@ -22,21 +22,25 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var progress: ProgressBar
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val binding = ActivityLoginBinding.inflate(layoutInflater)
         enableEdgeToEdge()
-        val binding=ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
         auth = Firebase.auth
+
         val emailET: EditText = binding.etEmail
-        val passlET: EditText =binding.etPass
+        val passlET: EditText = binding.etPass
         val createAcc: TextView = binding.createAcc
         progress = binding.progress
-        val btn: Button =binding.loginBtn
-        val forgotpass: TextView =binding.forgetPass
+        val btn: Button = binding.loginBtn
+        val forgotpass: TextView = binding.forgetPass
 
 
 
