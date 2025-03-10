@@ -8,6 +8,7 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+
     <TextView
         android:id="@+id/tv"
         style="@style/TVStyle"
@@ -15,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:text="Today's News"
+        android:text="@string/today_s_news"
         app:layout_constraintEnd_toStartOf="@+id/menu_btn"
         app:layout_constraintHorizontal_bias="0.085"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,8 +25,8 @@
 
     <ImageView
         android:id="@+id/menu_btn"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_marginEnd="16dp"
         android:src="@drawable/menu_icon3"
         app:layout_constraintBottom_toBottomOf="@id/tv"
@@ -57,12 +58,12 @@
             app:startIconDrawable="@drawable/ic_search"
             app:startIconTint="@color/black">
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/search_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:hint="Search for news"
+                android:hint="@string/search_for_news"
                 android:inputType="text"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
@@ -75,7 +76,7 @@
 
 
     <FrameLayout
-        android:id="@+id/category_list_item"
+        android:id="@+id/category_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -84,15 +85,19 @@
         app:layout_constraintTop_toBottomOf="@id/search_card">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/categories_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
             android:orientation="horizontal"
+            android:visibility="visible"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/category_list_item">
 
         </androidx.recyclerview.widget.RecyclerView>
 
     </FrameLayout>
+
 
     <FrameLayout
         android:id="@+id/main"
@@ -101,14 +106,13 @@
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/category_list_item">
+        app:layout_constraintTop_toBottomOf="@id/category_container">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipe_ref"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="8dp">
-
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/news_list"
@@ -130,5 +134,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </FrameLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
