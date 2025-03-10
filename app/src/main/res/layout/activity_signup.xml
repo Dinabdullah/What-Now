@@ -7,11 +7,11 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="24dp"
     tools:context=".SignupActivity">
 
     <TextView
-        android:layout_width="match_parent"
+        style="@style/TVStyle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="SIGN UP"
@@ -22,9 +22,15 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:hint="Username"
         android:textColorHint="@color/black"
-        app:boxStrokeColor="@color/black"
-        android:hint="Username">
+        app:boxCornerRadiusBottomEnd="32dp"
+        app:boxCornerRadiusBottomStart="32dp"
+        app:boxCornerRadiusTopEnd="32dp"
+        app:boxCornerRadiusTopStart="32dp"
+        app:boxStrokeColor="@color/black">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/user_name"
@@ -36,13 +42,19 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:hint="Email"
         android:textColorHint="@color/black"
-        app:boxStrokeColor="@color/black"
-        android:hint="Email">
+        app:boxCornerRadiusBottomEnd="32dp"
+        app:boxCornerRadiusBottomStart="32dp"
+        app:boxCornerRadiusTopEnd="32dp"
+        app:boxCornerRadiusTopStart="32dp"
+        app:boxStrokeColor="@color/black">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
             android:id="@+id/email_et"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -50,16 +62,22 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
         android:hint="Password"
-        app:endIconTint="@color/black"
         android:textColorHint="@color/black"
+        app:boxCornerRadiusBottomEnd="32dp"
+        app:boxCornerRadiusBottomStart="32dp"
+        app:boxCornerRadiusTopEnd="32dp"
+        app:boxCornerRadiusTopStart="32dp"
         app:boxStrokeColor="@color/black"
-        app:endIconMode="password_toggle">
+        app:endIconMode="password_toggle"
+        app:endIconTint="@color/black">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/pass_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/pass_et"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -67,19 +85,25 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
         android:hint="Confirm Password"
         android:textColorHint="@color/black"
+        app:boxCornerRadiusBottomEnd="32dp"
+        app:boxCornerRadiusBottomStart="32dp"
+        app:boxCornerRadiusTopEnd="32dp"
+        app:boxCornerRadiusTopStart="32dp"
         app:boxStrokeColor="@color/black"
-        app:endIconTint="@color/black"
-        app:endIconMode="password_toggle">
+        app:endIconMode="password_toggle"
+        app:endIconTint="@color/black">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/conpass_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/conpass_et"
+            android:inputType="textPassword"
             android:textColorHint="@color/black"
-            app:boxStrokeColor="@color/black"
-            android:inputType="textPassword" />
+            app:boxStrokeColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -87,17 +111,19 @@
         android:id="@+id/signup_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
         android:backgroundTint="#1333E4"
         android:text="Sign Up"
-        app:cornerRadius="4dp" />
+        app:icon="@drawable/ic_profile"
+        app:iconSize="24dp" />
 
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
         android:id="@+id/already_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="@string/already_have_account"
         android:textColor="#1333E4" />
 
@@ -106,7 +132,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="8dp"
+        android:layout_marginTop="8dp"
         android:visibility="invisible"
         tools:visibility="visible" />
 
