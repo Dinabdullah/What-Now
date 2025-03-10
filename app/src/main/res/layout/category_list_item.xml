@@ -14,9 +14,7 @@
         android:layout_marginTop="8dp"
         android:backgroundTint="@color/light_blue"
         app:cardCornerRadius="72dp"
-        app:layout_constraintBottom_toTopOf="@id/category_tv"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/search_layout">
+       >
 
         <ImageView
             android:layout_width="match_parent"
@@ -35,8 +33,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="Sports"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/category" />
+        />
 
 
 </LinearLayout>
