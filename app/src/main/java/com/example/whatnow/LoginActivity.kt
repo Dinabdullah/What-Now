@@ -40,13 +40,18 @@ class LoginActivity : AppCompatActivity() {
             else {
                 binding.progress.isVisible = true
                 login(email, pass)
+
             }
+
+
         }
 
         binding.createAcc.setOnClickListener {
             startActivity(Intent(this, SignupActivity::class.java))
             finish()
         }
+
+
 
         binding.forgetPass.setOnClickListener {
             binding.progress.isVisible = true
@@ -64,10 +69,11 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithEmailAndPassword(email, pass)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    if (auth.currentUser!!.isEmailVerified)
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
+                    if (auth.currentUser!!.isEmailVerified) {
                         Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show()
-                    else
-                        Toast.makeText(this, "Check your Email!", Toast.LENGTH_SHORT).show()
+                    }
                 } else
                     Toast.makeText(this, task.exception?.message, Toast.LENGTH_SHORT).show()
                 progress.isVisible = false
