@@ -5,6 +5,7 @@ import retrofit2.http.GET
 
 interface NewsCallable {
 
-    @GET("/v2/top-headlines?country=us&category=general&apiKey=f5fd9135e7a24c61886b994c64655e9b&pageSize=30")
-    fun getNews(): Call<News>
+    @GET("/v2/top-headlines?country=us&apiKey=7bc94ffe944e45cd992b3b12b228f3e2")
+    fun getNews(
+        @Query("category") category: String? = null,): Call<News>
 }
