@@ -13,33 +13,32 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.whatnow.databinding.ArticalListItemBinding
 
-class NewsAdapter(val a: Activity, private val articles: MutableList<Article>) :
+class NewsAdapter(val a: Activity, val articales: ArrayList<Article>) :
     Adapter<NewsAdapter.NewsViewHolder>() {
     class NewsViewHolder(val binding: ArticalListItemBinding) : ViewHolder(binding.root) {
 
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
         val b = ArticalListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return NewsViewHolder(b)
     }
 
-    override fun getItemCount() = articles.size
+    override fun getItemCount() = articales.size
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
 
-        Log.d("trace","Link:${articles[position].urlToImage}]")
-        holder.binding.articaleText.text = articles[position].title
+        Log.d("trace","Link:${articales[position].urlToImage}]")
+        holder.binding.articaleText.text = articales[position].title
         Glide
             .with(holder.binding.articaleImage.context)
-            .load(articles[position].urlToImage)
+            .load(articales[position].urlToImage)
             .error(R.drawable.broken_image_24)
             .transition(DrawableTransitionOptions.withCrossFade(1000))
             .into(holder.binding.articaleImage)
 
 
-        val url = articles[position].url
+        val url = articales[position].url
 
         holder.binding.articaleContainer.setOnClickListener {
 
@@ -56,9 +55,5 @@ class NewsAdapter(val a: Activity, private val articles: MutableList<Article>) :
                 .startChooser()
         }
     }
-    fun updateNews(newArticles: List<Article>) {
-        articles.clear()
-        articles.addAll(newArticles)
-        notifyDataSetChanged()
-    }
+
 }
