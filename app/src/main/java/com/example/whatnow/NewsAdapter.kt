@@ -2,46 +2,43 @@ package com.example.whatnow
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.app.ShareCompat
 import androidx.core.net.toUri
-import androidx.recyclerview.widget.RecyclerView.Adapter
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.example.whatnow.databinding.ArticalListItemBinding
+import com.example.whatnow.databinding.ArticleListItemBinding
 
-class NewsAdapter(val a: Activity, val articales: ArrayList<Article>) :
-    Adapter<NewsAdapter.NewsViewHolder>() {
-    class NewsViewHolder(val binding: ArticalListItemBinding) : ViewHolder(binding.root) {
+class NewsAdapter(
+    private val a: Activity,
+    private val articles: MutableList<Article>,
+) :
+    RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
-    }
+    class NewsViewHolder(val binding: ArticleListItemBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
-        val b = ArticalListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val b = ArticleListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return NewsViewHolder(b)
     }
 
-    override fun getItemCount() = articales.size
+    override fun getItemCount() = articles.size
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
+        holder.binding.articleText.text = articles[position].title
 
-        Log.d("trace","Link:${articales[position].urlToImage}]")
-        holder.binding.articaleText.text = articales[position].title
         Glide
-            .with(holder.binding.articaleImage.context)
-            .load(articales[position].urlToImage)
-            .error(R.drawable.broken_image_24)
+            .with(holder.binding.articleImage.context)
+            .load(articles[position].urlToImage)
+            .error(R.drawable.broken_image)
             .transition(DrawableTransitionOptions.withCrossFade(1000))
-            .into(holder.binding.articaleImage)
+            .into(holder.binding.articleImage)
 
-
-        val url = articales[position].url
-
-        holder.binding.articaleContainer.setOnClickListener {
-
+        val url = articles[position].url
+        holder.binding.articleContainer.setOnClickListener {
             val i = Intent(Intent.ACTION_VIEW, url.toUri())
             a.startActivity(i)
         }
@@ -50,10 +47,15 @@ class NewsAdapter(val a: Activity, val articales: ArrayList<Article>) :
             ShareCompat
                 .IntentBuilder(a)
                 .setType("text/plain")
-                .setChooserTitle("Share articale with:")
+                .setChooserTitle("Share article with: ")
                 .setText(url)
                 .startChooser()
         }
     }
+    fun updateNews(newArticles: List<Article>) {
+        articles.clear()
+        articles.addAll(newArticles)
+        notifyDataSetChanged()
+    }
 
-}
+    }
