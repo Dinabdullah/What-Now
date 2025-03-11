@@ -49,26 +49,19 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:boxBackgroundMode="filled"
             app:boxCornerRadiusBottomEnd="25dp"
             app:boxCornerRadiusBottomStart="25dp"
             app:boxCornerRadiusTopEnd="25dp"
             app:boxCornerRadiusTopStart="25dp"
             app:boxStrokeWidth="0dp"
-            app:startIconDrawable="@drawable/ic_search"
             app:startIconTint="@color/black">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/search_bar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:hint="@string/search_for_news"
-                android:inputType="text"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+            <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:queryHint="Search by country or category"
+            android:iconifiedByDefault="false" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -120,7 +113,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/article_list_item" />
+                tools:listitem="@layout/artical_list_item" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
