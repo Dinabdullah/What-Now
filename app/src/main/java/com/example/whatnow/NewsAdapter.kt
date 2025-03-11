@@ -19,6 +19,7 @@ class NewsAdapter(val a: Activity, private val articles: MutableList<Article>) :
 
     }
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
         val b = ArticalListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return NewsViewHolder(b)
