@@ -20,7 +20,6 @@ interface NewsCallable {
     ): Call<News>
 }
 /*
-
 maria API key
 7bc94ffe944e45cd992b3b12b228f3e2
 */
