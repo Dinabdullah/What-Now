@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".LoginActivity">
@@ -29,12 +30,14 @@
         app:boxCornerRadiusBottomStart="32dp"
         app:boxCornerRadiusTopEnd="32dp"
         app:boxCornerRadiusTopStart="32dp"
-        app:boxStrokeColor="@color/black">
+        app:boxStrokeColor="@color/black"
+        app:hintTextColor="@color/black">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_email"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -51,13 +54,15 @@
         app:boxCornerRadiusTopStart="32dp"
         app:boxStrokeColor="@color/black"
         app:endIconMode="password_toggle"
-        app:endIconTint="@color/black">
+        app:endIconTint="@color/black"
+        app:hintTextColor="@color/black">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -65,9 +70,9 @@
         android:id="@+id/forget_pass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_gravity="start"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:text="@string/forget_password"
         android:textColor="#1333E4" />
 
@@ -78,9 +83,11 @@
         android:layout_gravity="center"
         android:layout_marginTop="16dp"
         android:backgroundTint="#1333E4"
-        android:text="Sign in"
+        android:text="Log in"
+        android:textColor="@color/white"
         app:icon="@drawable/ic_profile"
-        app:iconSize="24dp" />
+        app:iconSize="24dp"
+        app:iconTint="@color/white" />
 
 
     <TextView
