@@ -2,7 +2,6 @@ package com.example.whatnow
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -16,7 +15,6 @@ import com.google.firebase.ktx.Firebase
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
-    private lateinit var progress: ProgressBar
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -39,7 +37,7 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "Missing filed/s", Toast.LENGTH_SHORT).show()
             else {
                 binding.progress.isVisible = true
-                login(email, pass)
+                login(email, pass, binding)
 
             }
 
@@ -65,7 +63,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun login(email: String, pass: String) {
+    private fun login(email: String, pass: String, binding: ActivityLoginBinding) {
         auth.signInWithEmailAndPassword(email, pass)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
@@ -76,7 +74,7 @@ class LoginActivity : AppCompatActivity() {
                     }
                 } else
                     Toast.makeText(this, task.exception?.message, Toast.LENGTH_SHORT).show()
-                progress.isVisible = false
+                binding.progress.isVisible = false
             }
     }
 }

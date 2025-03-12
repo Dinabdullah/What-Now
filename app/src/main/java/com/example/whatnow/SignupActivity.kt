@@ -71,11 +71,16 @@ class SignupActivity : AppCompatActivity() {
             ?.addOnCompleteListener { task ->
                 binding.progress.isVisible = false
                 if (task.isSuccessful) {
-                    Toast.makeText(this, "Verification email sent! Check your inbox.", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        this,
+                        "Verification email sent! Check your inbox.",
+                        Toast.LENGTH_LONG
+                    ).show()
                     startActivity(Intent(this, LoginActivity::class.java))
                     finish()
                 } else {
-                    Toast.makeText(this, "Failed to send verification email.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Failed to send verification email.", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
     }
