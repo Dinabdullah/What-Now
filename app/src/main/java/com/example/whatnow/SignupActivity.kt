@@ -56,8 +56,15 @@ class SignupActivity : AppCompatActivity() {
         auth.createUserWithEmailAndPassword(email, pass)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
+                    val userName = binding.userName.text.toString().trim()
+                    val sharedPref = getSharedPreferences("UserData", MODE_PRIVATE)
+                    val editor = sharedPref.edit()
+                    editor.putString("username", userName)
+                    editor.putString("email", email)
+                    editor.apply()
                     VerifyEmail(binding)
-                } else {
+                }
+                else {
                     Toast.makeText(this, "${task.exception?.message}", Toast.LENGTH_SHORT).show()
                     binding.progress.isVisible = false
                 }

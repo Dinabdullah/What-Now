@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
 import android.widget.ArrayAdapter
-import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.whatnow.databinding.ActivitySettingsBinding
@@ -25,6 +24,7 @@ class SettingsActivity : AppCompatActivity() {
         setupThemeSwitch()
         setupCountrySelector()
         setupLanguageSelector()
+        setupProfileSection()
     }
 
     private fun setupThemeSwitch() {
@@ -64,7 +64,6 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-
     private fun setupLanguageSelector() {
         val languages = mapOf("English" to "en", "العربية" to "ar")
         val languageList = languages.keys.toList()
@@ -80,6 +79,16 @@ class SettingsActivity : AppCompatActivity() {
         binding.saveLanguageButton.setOnClickListener {
             val selectedLanguage = binding.languageSpinner.selectedItem.toString()
             setLocale(languages[selectedLanguage]!!)
+        }
+    }
+
+    private fun setupProfileSection() {
+        val userPrefs = getSharedPreferences("UserData", MODE_PRIVATE)
+        val username = userPrefs.getString("username", "User Name")
+
+        binding.tvSettingsUsername.text = username
+        binding.profileIcon.setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))
         }
     }
 
