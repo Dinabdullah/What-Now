@@ -17,9 +17,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:text="@string/today_s_news"
-        app:layout_constraintEnd_toStartOf="@+id/menu_btn"
         app:layout_constraintHorizontal_bias="0.085"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/menu_btn"
         app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -29,6 +28,16 @@
         android:layout_height="32dp"
         android:layout_marginEnd="16dp"
         android:src="@drawable/ic_menu"
+        app:layout_constraintBottom_toBottomOf="@id/tv"
+        app:layout_constraintEnd_toStartOf="@+id/tv"
+        app:layout_constraintTop_toTopOf="@+id/tv" />
+
+    <ImageView
+        android:id="@+id/settings_btn"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/settings_btn"
         app:layout_constraintBottom_toBottomOf="@id/tv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv" />

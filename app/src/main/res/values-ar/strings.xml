@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">ماذا الآن</string>
+    <string name="create_account"><u>إنشاء حساب؟</u></string>
+    <string name="already_have_account"><u>هل لديك حساب بالفعل؟</u></string>
+    <string name="forget_password"><u>هل نسيت كلمة المرور؟</u></string>
+    <string name="search_for_news">ابحث عن الأخبار</string>
+    <string name="today_s_news">أخبار اليوم</string>
+    <string name="settings">الإعدادات</string>
+    <string name="dark_mode">الوضع الداكن</string>
+    <string name="select_news_country">اختر دولة الأخبار</string>
+    <string name="save_country">حفظ الدولة</string>
+    <string name="select_app_language">اختر لغة التطبيق</string>
+    <string name="save_language">حفظ اللغة</string>
+</resources>

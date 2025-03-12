@@ -1,18 +1,16 @@
 package com.example.whatnow
 
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.whatnow.databinding.ActivityMainBinding
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
+import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
@@ -21,11 +19,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var newsAdapter: NewsAdapter
     private lateinit var categoriesAdapter: CategoriesAdapter
     private lateinit var newsCallable: NewsCallable
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        sharedPreferences = getSharedPreferences("app_settings", MODE_PRIVATE)
+        val selectedCountry = sharedPreferences.getString("news_country", "us") ?: "us"
 
         val retrofit = Retrofit.Builder()
             .baseUrl("https://newsapi.org")
@@ -36,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         setupAdapters()
         setupSearchView()
 
-        fetchNews("us", null)
+        fetchNews(selectedCountry, null)
 
         val categories = mutableListOf(
             Category(R.drawable.entertainment, "Entertainment", "entertainment"),
@@ -47,7 +49,11 @@ class MainActivity : AppCompatActivity() {
         )
         categoryNews(categories)
 
-        binding.swipeRef.setOnRefreshListener { fetchNews("us", null) }
+        binding.swipeRef.setOnRefreshListener { fetchNews(selectedCountry, null) }
+
+        binding.settingsBtn.setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
+        }
     }
 
     private fun setupSearchView() {
@@ -67,13 +73,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleSearchQuery(query: String) {
         val countryMap = mapOf(
-            "united states" to "us",
-            "uk" to "gb",
-            "germany" to "de",
-            "france" to "fr",
-            "india" to "in",
-            "canada" to "ca",
-            "australia" to "au"
+            "usa" to "us",
+            "spain" to "es",
+            "egypt" to "eg"
         )
 
         val categoryList = listOf(
@@ -94,7 +96,8 @@ class MainActivity : AppCompatActivity() {
             }
 
             categoryList.contains(lowerCaseQuery) -> {
-                fetchNews("us", lowerCaseQuery)
+                val selectedCountry = sharedPreferences.getString("news_country", "us") ?: "us"
+                fetchNews(selectedCountry, lowerCaseQuery)
             }
 
             else -> {
@@ -106,16 +109,13 @@ class MainActivity : AppCompatActivity() {
     private fun fetchNews(country: String, category: String? = null) {
         binding.progressBar.isVisible = true
         Log.d("MainActivity", "Fetching news for country=$country, category=$category")
+
         newsCallable.getNews(country, category).enqueue(object : Callback<News> {
             override fun onResponse(call: Call<News>, response: Response<News>) {
                 binding.progressBar.isVisible = false
                 binding.swipeRef.isRefreshing = false
 
                 if (!response.isSuccessful || response.body() == null || response.body()?.articles.isNullOrEmpty()) {
-                    Log.e(
-                        "MainActivity",
-                        "No results found for: country=$country, category=$category"
-                    )
                     Toast.makeText(this@MainActivity, "No news found", Toast.LENGTH_SHORT).show()
                     return
                 }
@@ -127,13 +127,13 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<News>, t: Throwable) {
-                Log.e("MainActivity", "Error: ${t.message}")
                 Toast.makeText(this@MainActivity, "Failed to fetch news", Toast.LENGTH_SHORT).show()
                 binding.progressBar.isVisible = false
                 binding.swipeRef.isRefreshing = false
             }
         })
     }
+
 
     private fun searchEverything(query: String) {
         binding.progressBar.isVisible = true
@@ -170,7 +170,8 @@ class MainActivity : AppCompatActivity() {
         binding.newsList.adapter = newsAdapter
 
         categoriesAdapter = CategoriesAdapter(this, mutableListOf()) { selectedCategory ->
-            fetchNews("us", selectedCategory)
+            val selectedCountry = sharedPreferences.getString("news_country", "us") ?: "us"
+            fetchNews(selectedCountry, selectedCategory)
             binding.categoriesList.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         }
@@ -180,7 +181,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun categoryNews(category: MutableList<Category>) {
         val adapter = CategoriesAdapter(this, category) { selectedCategory ->
-            fetchNews("us", selectedCategory)
+            val selectedCountry = sharedPreferences.getString("news_country", "us") ?: "us"
+            fetchNews(selectedCountry, selectedCategory)
         }
         binding.categoriesList.adapter = adapter
     }
