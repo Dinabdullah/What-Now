@@ -9,7 +9,8 @@
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
     android:layout_marginEnd="8dp"
-    app:cardCornerRadius="24dp">
+    app:cardCornerRadius="24dp"
+    app:cardElevation="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -25,41 +26,53 @@
         <View
             android:id="@+id/shadow_view"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:alpha="0.4"
-            android:background="@color/black"
+            android:layout_height="80dp"
+            android:alpha="0.6"
+            android:background="@drawable/gradient_overlay"
             app:layout_constraintBottom_toBottomOf="parent" />
 
         <TextView
             android:id="@+id/articale_text"
             style="@style/TVStyle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:maxLength="23"
-            app:layout_constraintBottom_toBottomOf="@+id/shadow_view"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/shadow_view"
-            tools:text="@tools:sample/full_names" />
-
-        <TextView
-            style="@style/TVStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="..."
-            app:layout_constraintBottom_toBottomOf="@+id/articale_text"
-            app:layout_constraintStart_toEndOf="@+id/articale_text" />
+            tools:text="Article Title Goes Here" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/share_fab"
+            android:id="@+id/shareFab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:backgroundTint="#4DFFFFFF"
+            app:fabSize="mini"
+            android:src="@drawable/share"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/favFab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="16dp"
             android:backgroundTint="#4DFFFFFF"
-            android:src="@drawable/share"
+            app:fabSize="mini"
+            android:src="@drawable/ic_favorite_border"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/shareFab"
+            app:tint="@color/white" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

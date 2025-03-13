@@ -8,6 +8,7 @@ data class Article(
     val title: String,
     val url: String,
     val urlToImage: String,
+    var isFavorite: Boolean = false
 )
 
 data class Category(

@@ -17,6 +17,8 @@ class NewsAdapter(
 ) :
     RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
+    private val favoritesDb = FavoritesDatabase(a)
+
     class NewsViewHolder(val binding: ArticalListItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -28,16 +30,17 @@ class NewsAdapter(
     override fun getItemCount() = articles.size
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
-        holder.binding.articaleText.text = articles[position].title
+        val article = articles[position]
+        holder.binding.articaleText.text = article.title
 
         Glide
             .with(holder.binding.articaleImage.context)
-            .load(articles[position].urlToImage)
+            .load(article.urlToImage)
             .error(R.drawable.broken_image)
             .transition(DrawableTransitionOptions.withCrossFade(1000))
             .into(holder.binding.articaleImage)
 
-        val url = articles[position].url
+        val url = article.url
         holder.binding.articaleContainer.setOnClickListener {
             val i = Intent(Intent.ACTION_VIEW, url.toUri())
             a.startActivity(i)
@@ -51,10 +54,45 @@ class NewsAdapter(
                 .setText(url)
                 .startChooser()
         }
+
+        // Update favorite button state
+        article.isFavorite = favoritesDb.isFavorite(article.url)
+        updateFavoriteButtonState(holder.binding, article.isFavorite)
+
+        holder.binding.favFab.setOnClickListener {
+            if (article.isFavorite) {
+                if (favoritesDb.removeFavorite(article.url)) {
+                    article.isFavorite = false
+                    // If we're in favorites view, remove the item
+                    if (articles.all { favoritesDb.isFavorite(it.url) }) {
+                        articles.removeAt(position)
+                        notifyItemRemoved(position)
+                        notifyItemRangeChanged(position, articles.size)
+                    }
+                }
+            } else {
+                if (favoritesDb.addFavorite(article)) {
+                    article.isFavorite = true
+                }
+            }
+            updateFavoriteButtonState(holder.binding, article.isFavorite)
+        }
     }
+
+    private fun updateFavoriteButtonState(binding: ArticalListItemBinding, isFavorite: Boolean) {
+        binding.favFab.setImageResource(
+            if (isFavorite) R.drawable.ic_favorite_filled
+            else R.drawable.ic_favorite_border
+        )
+    }
+
     fun updateNews(newArticles: List<Article>) {
         articles.clear()
         articles.addAll(newArticles)
+        // Update favorite status for all articles
+        articles.forEach { article ->
+            article.isFavorite = favoritesDb.isFavorite(article.url)
+        }
         notifyDataSetChanged()
     }
 

@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
         fetchNews(selectedCountry, null)
 
         val categories = mutableListOf(
+            Category(R.drawable.favorite, "Favorites", "favorites"),
             Category(R.drawable.entertainment, "Entertainment", "entertainment"),
             Category(R.drawable.business, "Business", "business"),
             Category(R.drawable.technology, "Technology", "technology"),
@@ -181,8 +182,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun categoryNews(category: MutableList<Category>) {
         val adapter = CategoriesAdapter(this, category) { selectedCategory ->
-            val selectedCountry = sharedPreferences.getString("news_country", "us") ?: "us"
-            fetchNews(selectedCountry, selectedCategory)
+            if (selectedCategory == "Favorites") {
+                val favoritesDb = FavoritesDatabase(this)
+                val favorites = favoritesDb.getAllFavorites()
+                newsAdapter.updateNews(favorites)
+            } else {
+                val selectedCountry = sharedPreferences.getString("news_country", "us") ?: "us"
+                fetchNews(selectedCountry, selectedCategory)
+            }
         }
         binding.categoriesList.adapter = adapter
     }
