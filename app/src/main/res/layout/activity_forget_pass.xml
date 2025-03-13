@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="8dp"
-            android:hint="Password"
+            android:hint="Email"
             android:textColorHint="@color/black"
             app:boxCornerRadiusBottomEnd="32dp"
             app:boxCornerRadiusBottomStart="32dp"
