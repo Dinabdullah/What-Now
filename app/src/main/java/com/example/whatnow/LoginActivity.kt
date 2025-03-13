@@ -15,11 +15,13 @@ import com.google.firebase.ktx.Firebase
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityLoginBinding.inflate(layoutInflater)
         enableEdgeToEdge()
         setContentView(binding.root)
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -28,53 +30,45 @@ class LoginActivity : AppCompatActivity() {
 
         auth = Firebase.auth
 
+        binding.forgetPass.setOnClickListener {
+            startActivity(Intent(this, ForgetPassActivity::class.java))
+        }
 
         binding.loginBtn.setOnClickListener {
-            val email = binding.etEmail.text.toString()
-            val pass = binding.etPass.text.toString()
+            val email = binding.etEmail.text.toString().trim()
+            val pass = binding.etPass.text.toString().trim()
 
-            if (email.isBlank() || pass.isBlank())
-                Toast.makeText(this, "Missing filed/s", Toast.LENGTH_SHORT).show()
-            else {
+            if (email.isBlank() || pass.isBlank()) {
+                Toast.makeText(this, "Missing field(s)", Toast.LENGTH_SHORT).show()
+            } else {
                 binding.progress.isVisible = true
                 login(email, pass, binding)
-
             }
-
-
         }
 
         binding.createAcc.setOnClickListener {
             startActivity(Intent(this, SignupActivity::class.java))
             finish()
         }
-
-
-
-        binding.forgetPass.setOnClickListener {
-            binding.progress.isVisible = true
-            val email = binding.etEmail.text.toString()
-            Firebase.auth.sendPasswordResetEmail(email)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful)
-                        Toast.makeText(this, "Check Email", Toast.LENGTH_SHORT).show()
-                    binding.progress.isVisible = false
-                }
-        }
     }
 
     private fun login(email: String, pass: String, binding: ActivityLoginBinding) {
         auth.signInWithEmailAndPassword(email, pass)
             .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    startActivity(Intent(this, MainActivity::class.java))
-                    finish()
-                    if (auth.currentUser!!.isEmailVerified) {
-                        Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show()
-                    }
-                } else
-                    Toast.makeText(this, task.exception?.message, Toast.LENGTH_SHORT).show()
                 binding.progress.isVisible = false
+
+                if (task.isSuccessful) {
+                    val user = auth.currentUser
+                    if (user != null && user.isEmailVerified) {
+                        Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this, MainActivity::class.java))
+                        finish()
+                    } else {
+                        Toast.makeText(this, "Please verify your email first.", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(this, task.exception?.message, Toast.LENGTH_SHORT).show()
+                }
             }
     }
 }
