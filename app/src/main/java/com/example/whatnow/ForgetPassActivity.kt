@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.example.whatnow.databinding.ActivityForgetPassBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 
 class ForgetPassActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
@@ -13,10 +14,8 @@ class ForgetPassActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityForgetPassBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         auth = FirebaseAuth.getInstance()
 
         binding.resetBtn.setOnClickListener {
@@ -32,19 +31,19 @@ class ForgetPassActivity : AppCompatActivity() {
             auth.sendPasswordResetEmail(email)
                 .addOnCompleteListener { task ->
                     binding.progressBar.isVisible = false
-                    if (task.isSuccessful) {
-                        Toast.makeText(
-                            this,
-                            "Check your email for reset instructions",
-                            Toast.LENGTH_LONG
-                        ).show()
+
+                    val message = if (task.isSuccessful) {
+                        "If You SignedIn before, you'll receive reset Email"
                     } else {
-                        Toast.makeText(
-                            this,
-                            task.exception?.localizedMessage ?: "Error occurred",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        when (task.exception) {
+                            is FirebaseAuthInvalidUserException ->
+                                "If this email is registered, you'll receive reset instructions"
+                            else ->
+                                task.exception?.message ?: "Failed to send reset email"
+                        }
                     }
+
+                    Toast.makeText(this, message, Toast.LENGTH_LONG).show()
                 }
         }
     }
