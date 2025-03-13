@@ -46,7 +46,6 @@
             app:boxCornerRadiusTopEnd="32dp"
             app:boxCornerRadiusTopStart="32dp"
             app:boxStrokeColor="@color/black"
-            app:endIconMode="password_toggle"
             app:endIconTint="@color/black"
             app:hintTextColor="@color/black">
 
@@ -54,7 +53,6 @@
                 android:id="@+id/emailEt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
                 android:textColor="@color/black" />
         </com.google.android.material.textfield.TextInputLayout>
 
