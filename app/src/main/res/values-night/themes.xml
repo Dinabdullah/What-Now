@@ -3,7 +3,6 @@
         <item name="colorPrimary">@color/blue</item>
         <item name="colorPrimaryVariant">@color/light_blue</item>
         <item name="android:windowBackground">?android:colorBackground</item>
-        <item name="fontFamily">@font/amita_bold</item>
     </style>
 
     <style name="Theme.WhatNow" parent="Base.Theme.WhatNow" />
