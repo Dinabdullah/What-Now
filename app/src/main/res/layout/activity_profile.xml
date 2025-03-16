@@ -8,18 +8,25 @@
     android:padding="20dp">
     <ImageView
         android:id="@+id/profileImage"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
         android:src="@drawable/ic_profile"
         android:scaleType="centerCrop"
-        android:layout_marginBottom="20dp"/>
+        android:clickable="true"
+        android:focusable="true"/>
+
     <TextView
-        android:id="@+id/tvUsername"
+        android:id="@+id/tvUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="User Name"
+        android:text="Name"
         android:textSize="20sp"
-        android:textStyle="bold"/>
+        android:layout_margin="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:textColor="@android:color/holo_blue_dark"/>
+
 
     <TextView
         android:id="@+id/tvEmail"
