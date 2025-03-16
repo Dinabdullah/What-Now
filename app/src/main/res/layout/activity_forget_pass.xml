@@ -17,13 +17,14 @@
     tools:context=".ForgetPassActivity">
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Forgot Password"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+    <ImageView
+        android:id="@+id/my_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/password"
+        android:scaleType="fitCenter" />
+
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -41,10 +42,6 @@
             android:layout_marginTop="8dp"
             android:hint="Email"
             android:textColorHint="@color/black"
-            app:boxCornerRadiusBottomEnd="32dp"
-            app:boxCornerRadiusBottomStart="32dp"
-            app:boxCornerRadiusTopEnd="32dp"
-            app:boxCornerRadiusTopStart="32dp"
             app:boxStrokeColor="@color/black"
             app:endIconTint="@color/black"
             app:hintTextColor="@color/black">
