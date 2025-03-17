@@ -16,15 +16,14 @@
     android:orientation="vertical"
     tools:context=".LoginActivity">
 
-    <TextView
-        style="@style/TVStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="LOG IN"
-        android:textColor="@color/black"
-        android:textSize="32sp"
-        android:textStyle="bold" />
+
+
+    <ImageView
+        android:id="@+id/my_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/login"
+        android:scaleType="fitCenter" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -32,10 +31,6 @@
         android:layout_marginHorizontal="16dp"
         android:hint="Email"
         android:textColorHint="@color/black"
-        app:boxCornerRadiusBottomEnd="32dp"
-        app:boxCornerRadiusBottomStart="32dp"
-        app:boxCornerRadiusTopEnd="32dp"
-        app:boxCornerRadiusTopStart="32dp"
         app:boxStrokeColor="@color/black"
         app:hintTextColor="@color/black">
 
@@ -54,10 +49,6 @@
         android:layout_marginTop="8dp"
         android:hint="Password"
         android:textColorHint="@color/black"
-        app:boxCornerRadiusBottomEnd="32dp"
-        app:boxCornerRadiusBottomStart="32dp"
-        app:boxCornerRadiusTopEnd="32dp"
-        app:boxCornerRadiusTopStart="32dp"
         app:boxStrokeColor="@color/black"
         app:endIconMode="password_toggle"
         app:endIconTint="@color/black"
@@ -94,7 +85,6 @@
         app:icon="@drawable/ic_profile"
         app:iconSize="24dp"
         app:iconTint="@color/white" />
-
 
     <TextView
         android:id="@+id/create_acc"
