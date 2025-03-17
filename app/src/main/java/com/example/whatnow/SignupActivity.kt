@@ -39,6 +39,17 @@ class SignupActivity : AppCompatActivity() {
 
         auth = Firebase.auth
 
+        // Check if the user is already logged in
+        val prefs = getSharedPreferences("user_data", MODE_PRIVATE)
+        val isLoggedIn = prefs.getBoolean("isLoggedIn", false)
+
+        if (isLoggedIn) {
+            // Redirect to MainActivity and finish this activity
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+            return
+        }
+
         binding.signupBtn.setOnClickListener {
             val email = binding.emailEt.text.toString().trim()
             val pass = binding.passEt.text.toString().trim()
@@ -69,6 +80,7 @@ class SignupActivity : AppCompatActivity() {
                     val userName = binding.userName.text.toString().trim()
                     val sharedPref = getSharedPreferences("UserData", MODE_PRIVATE)
                     val editor = sharedPref.edit()
+                    editor.putBoolean("isLoggedIn", true)
                     editor.putString("username", userName)
                     editor.putString("email", email)
                     editor.apply()

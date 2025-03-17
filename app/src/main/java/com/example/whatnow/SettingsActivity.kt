@@ -1,8 +1,10 @@
 package com.example.whatnow
 
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
+import android.net.Uri
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
@@ -21,10 +23,26 @@ class SettingsActivity : AppCompatActivity() {
         setContentView(binding.root)
         sharedPreferences = getSharedPreferences("app_settings", MODE_PRIVATE)
 
+        val userName = intent.getStringExtra("username")
+        val name = sharedPreferences.getString("user_name", userName)
+        val imageUri = intent.getStringExtra("image_uri")
+        binding.tvSettingsUsername.text = name
+
+        if (imageUri != null) {
+            binding.profileIcon.setImageURI(Uri.parse(imageUri))
+        }
         setupThemeSwitch()
         setupCountrySelector()
         setupLanguageSelector()
         setupProfileSection()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Refresh name when returning from ProfileActivity
+        val prefs = getSharedPreferences("user_data", Context.MODE_PRIVATE)
+        val name = prefs.getString("user_name", "No Name")
+        binding.tvSettingsUsername.text = name
     }
 
     private fun setupThemeSwitch() {
