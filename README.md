@@ -1,10 +1,10 @@
 # WhatNow - News App
 
-* **Overview**
+# **Overview**
 
 WhatNow is an Android news application that fetches and displays news articles based on selected countries and categories. The app supports searching for news by country, category, or keyword. It utilizes the NewsAPI for fetching news and Retrofit for networking.
 
-* **Features**
+# **Features**
 
 📌 Fetch latest news by country
 
@@ -18,19 +18,19 @@ WhatNow is an Android news application that fetches and displays news articles b
 
 ⚙️ Settings screen to customize the news source country
 
-* **Tech Stack**
+# **Tech Stack**
 
-📌 Language: Kotlin
+• Language: Kotlin
 
-🌐 Networking: Retrofit
+• Networking: Retrofit
 
-🖌️ UI Components: RecyclerView, SearchView, SwipeRefreshLayout
+• UI Components: RecyclerView, SearchView, SwipeRefreshLayout
 
-💾 Storage: SharedPreferences, SQLite (for favorites)
+• Storage: SharedPreferences, SQLite (for favorites)
 
-📰 API: NewsAPI (https://newsapi.org)
+• API: NewsAPI (https://newsapi.org)
 
-* **Installation**
+# **Installation**
 
 Clone the repository:
 
@@ -43,7 +43,7 @@ Add your NewsAPI key in the appropriate place in your code (e.g., NewsCallable.k
 Build and run the app on an emulator or a physical device.
 
 
-* **Usage**
+# **Usage**
 
 📌 Browsing News: The homepage displays top headlines based on the selected country.
 
@@ -55,7 +55,7 @@ Build and run the app on an emulator or a physical device.
 
 ⚙️ Settings: Change the country preference from the settings screen.
 
-* **Screenshots**
+# **Screenshots**
 <p>
   <img src= "https://github.com/user-attachments/assets/bfc03856-4cf5-4879-833c-b20b2c05793a"alt="Image 1" width="20%"" />
   <img src="https://github.com/user-attachments/assets/0619bdf8-2d41-4728-b688-15558d41c98b" alt="Image 2" width="20%" />
