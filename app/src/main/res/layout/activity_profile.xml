@@ -43,4 +43,11 @@
         android:text="email@example.com"
         android:textSize="16sp"
         android:layout_marginTop="10dp"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:id="@+id/logout_btn"
+        android:text="Logout"
+        />
 </LinearLayout>

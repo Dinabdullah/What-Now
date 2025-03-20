@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.whatnow.databinding.ActivityProfileBinding
 import com.example.whatnow.profile.FullScreenImageActivity
+import com.google.firebase.auth.FirebaseAuth
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
@@ -44,6 +45,18 @@ class ProfileActivity : AppCompatActivity() {
 
         binding.profileImage.setOnClickListener {
             showImageOptionsDialog()
+        }
+        binding.logoutBtn.setOnClickListener{
+            val prefs = getSharedPreferences("user_data", Context.MODE_PRIVATE).edit()
+            prefs.clear()
+            prefs.apply()
+
+            FirebaseAuth.getInstance().signOut()
+
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
         }
     }
 
