@@ -17,10 +17,10 @@
 
     <ImageView
         android:id="@+id/profileIcon"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_marginEnd="16dp"
-        android:src="@drawable/ic_profile" />
+        android:src="@drawable/profile_avatar" />
 
     <TextView
         android:id="@+id/tvSettingsUsername"
