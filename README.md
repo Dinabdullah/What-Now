@@ -18,6 +18,14 @@ WhatNow is an Android news application that fetches and displays news articles b
 
 ⚙️ Settings screen to customize the news source country
 
+#  User authentication (Firebase) 
+
+• Sign Up / Login using email & password
+
+• Forgot Password recovery
+
+• Auto-login for returning users
+
 # **Tech Stack**
 
 • Language: Kotlin
@@ -29,6 +37,8 @@ WhatNow is an Android news application that fetches and displays news articles b
 • Storage: SharedPreferences, SQLite (for favorites)
 
 • API: NewsAPI (https://newsapi.org)
+
+• Authentication: Firebase Authentication
 
 # **Installation**
 
