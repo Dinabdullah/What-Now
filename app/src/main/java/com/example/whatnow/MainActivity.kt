@@ -41,12 +41,12 @@ class MainActivity : AppCompatActivity() {
         fetchNews(selectedCountry, null)
 
         val categories = mutableListOf(
-            Category(R.drawable.favorite, "Favorites", "favorites"),
-            Category(R.drawable.entertainment, "Entertainment", "entertainment"),
-            Category(R.drawable.business, "Business", "business"),
-            Category(R.drawable.technology, "Technology", "technology"),
-            Category(R.drawable.health, "Health", "health"),
-            Category(R.drawable.football_icon, "Sports", "sports")
+            Category(R.drawable.favourite_avatar, "Favorites", "favorites"),
+            Category(R.drawable.entertainment_avatar2, "Entertainment", "entertainment"),
+            Category(R.drawable.business_avatar, "Business", "business"),
+            Category(R.drawable.technology_avatar, "Technology", "technology"),
+            Category(R.drawable.health_avatar, "Health", "health"),
+            Category(R.drawable.sports_avatar, "Sports", "sports")
         )
         categoryNews(categories)
 

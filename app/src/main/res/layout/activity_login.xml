@@ -21,7 +21,7 @@
         android:id="@+id/my_image"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/login"
+        android:src="@drawable/login_avatar"
         android:scaleType="fitCenter" />
 
     <com.google.android.material.textfield.TextInputLayout

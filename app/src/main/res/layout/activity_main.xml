@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/dark_blue_background2"
+    android:background="@drawable/blue_bg"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -17,30 +17,20 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:text="@string/today_s_news"
-        app:layout_constraintHorizontal_bias="0.085"
-        app:layout_constraintStart_toEndOf="@+id/menu_btn"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <ImageView
-        android:id="@+id/menu_btn"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginEnd="16dp"
-        android:src="@drawable/ic_menu"
-        app:layout_constraintBottom_toBottomOf="@id/tv"
-        app:layout_constraintEnd_toStartOf="@+id/tv"
-        app:layout_constraintTop_toTopOf="@+id/tv" />
 
     <ImageView
         android:id="@+id/settings_btn"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginEnd="16dp"
-        android:src="@drawable/settings_btn"
+        android:src="@drawable/ic_menu"
         app:layout_constraintBottom_toBottomOf="@id/tv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv" />
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/search_card"
@@ -66,11 +56,11 @@
             app:startIconTint="@color/black">
 
             <SearchView
-            android:id="@+id/searchView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:queryHint="Search by country or category"
-            android:iconifiedByDefault="false" />
+                android:id="@+id/searchView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:iconifiedByDefault="false"
+                android:queryHint="Search by country or category" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
