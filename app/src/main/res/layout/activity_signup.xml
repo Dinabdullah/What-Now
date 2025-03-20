@@ -20,9 +20,9 @@
 
         <ImageView
             android:id="@+id/my_image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/signup"
+            android:layout_width="150dp"
+            android:layout_height="120dp"
+            android:src="@drawable/sign_up_avatar"
             android:scaleType="fitCenter" />
 
         <com.google.android.material.textfield.TextInputLayout

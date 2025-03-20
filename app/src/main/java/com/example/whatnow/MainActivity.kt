@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.whatnow.databinding.ActivityMainBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -26,7 +27,37 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        sharedPreferences = getSharedPreferences("app_settings", MODE_PRIVATE)
+                val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+
+                bottomNavigationView.setOnItemSelectedListener { item ->
+                    when (item.itemId) {
+                        R.id.nav_home -> {
+                            if (this::class.java != MainActivity::class.java) {
+                                val intent = Intent(this, MainActivity::class.java)
+                                intent.flags =
+                                    Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                                startActivity(intent)
+                            }
+                            true
+                        }
+
+                        R.id.nav_settings -> {
+                            startActivity(Intent(this, SettingsActivity::class.java))
+                            true
+                        }
+
+                        R.id.nav_profile -> {
+                            startActivity(Intent(this, ProfileActivity::class.java))
+                            true
+                        }
+
+                        else -> false
+                    }
+                }
+
+
+
+                sharedPreferences = getSharedPreferences("app_settings", MODE_PRIVATE)
         val selectedCountry = sharedPreferences.getString("news_country", "us") ?: "us"
 
         val retrofit = Retrofit.Builder()
