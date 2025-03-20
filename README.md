@@ -58,7 +58,15 @@ Build and run the app on an emulator or a physical device.
 # **Screenshots**
 <p>
   <img src= "https://github.com/user-attachments/assets/bfc03856-4cf5-4879-833c-b20b2c05793a"alt="Image 1" width="20%"" />
+</p>
+<p>
+  <img src= "https://github.com/user-attachments/assets/3d108758-fdb1-4f19-bcf4-7c6a73146b8f"alt="Image 1" width="20%"" />
+  <img src="https://github.com/user-attachments/assets/a2bd5118-1393-41e2-9569-8d2983da7185"alt="Image 2" width="20%" />
+</p>
+<p>
+  <img src= "https://github.com/user-attachments/assets/1cfb0f49-11a3-4b31-b0bf-512adff71270"alt="Image 1" width="20%"" />
   <img src="https://github.com/user-attachments/assets/0619bdf8-2d41-4728-b688-15558d41c98b" alt="Image 2" width="20%" />
 </p>
+
 
 
