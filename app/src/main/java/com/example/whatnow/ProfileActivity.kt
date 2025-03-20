@@ -34,17 +34,14 @@ class ProfileActivity : AppCompatActivity() {
         binding.tvUserName.text = name
         binding.tvEmail.text = email
 
-        // Load saved profile image if exists
         if (imageUri != null) {
             binding.profileImage.setImageURI(Uri.parse(imageUri))
         }
 
-        // Open dialog when clicking the name to edit it
         binding.tvUserName.setOnClickListener {
             showEditNameDialog()
         }
 
-        // Show options when clicking the image
         binding.profileImage.setOnClickListener {
             showImageOptionsDialog()
         }
@@ -65,7 +62,6 @@ class ProfileActivity : AppCompatActivity() {
                 if (newName.isNotEmpty()) {
                     binding.tvUserName.text = newName
 
-                    // Save updated name in SharedPreferences
                     val editor = prefs.edit()
                     editor.putString("user_name", newName)
                     editor.apply()
@@ -97,7 +93,7 @@ class ProfileActivity : AppCompatActivity() {
 
         if (imageUri != null) {
             val intent = Intent(this, FullScreenImageActivity::class.java)
-            intent.putExtra("image_uri", imageUri) // Pass image URI
+            intent.putExtra("image_uri", imageUri)
             startActivity(intent)
         } else {
             Toast.makeText(this, "No image available", Toast.LENGTH_SHORT).show()
