@@ -42,9 +42,9 @@ class MainActivity : AppCompatActivity() {
 
         val categories = mutableListOf(
             Category(R.drawable.favourite_avatar, "Favorites", "favorites"),
-            Category(R.drawable.entertainment_avatar2, "Entertainment", "entertainment"),
-            Category(R.drawable.business_avatar, "Business", "business"),
-            Category(R.drawable.technology_avatar, "Technology", "technology"),
+            Category(R.drawable.entertainment_ava, "Entertainment", "entertainment"),
+            Category(R.drawable.businessman_avatar, "Business", "business"),
+            Category(R.drawable.technology_ava, "Technology", "technology"),
             Category(R.drawable.health_avatar, "Health", "health"),
             Category(R.drawable.sports_avatar, "Sports", "sports")
         )
