@@ -1,4 +1,4 @@
-package com.example.whatnow.profile
+package com.example.whatnow
 
 import android.net.Uri
 import android.os.Bundle

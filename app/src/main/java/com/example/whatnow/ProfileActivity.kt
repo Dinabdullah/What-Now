@@ -11,7 +11,6 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.whatnow.databinding.ActivityProfileBinding
-import com.example.whatnow.profile.FullScreenImageActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class ProfileActivity : AppCompatActivity() {
