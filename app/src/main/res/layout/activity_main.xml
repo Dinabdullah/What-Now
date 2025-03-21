@@ -6,7 +6,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:clipToPadding="false">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,7 +39,7 @@
                 android:src="@drawable/ic_menu"
                 app:layout_constraintBottom_toBottomOf="@id/tv"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tv" />
+                app:layout_constraintTop_toTopOf="@id/tv" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/search_card"
@@ -113,7 +114,7 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/news_list"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="200dp"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/artical_list_item" />
 
@@ -131,23 +132,23 @@
 
             </FrameLayout>
 
-
-                <!-- Your existing views here -->
-
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottom_navigation"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_gravity="bottom"
-
-                android:background="?android:attr/windowBackground"
+                android:elevation="10dp"
+                android:outlineAmbientShadowColor="@color/blue"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:itemIconTint="@color/blue"
+                android:background="@drawable/rounded_bottom_nav"
+                app:itemTextColor="@color/blue"
                 app:menu="@menu/bottom_nav_menu" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 
