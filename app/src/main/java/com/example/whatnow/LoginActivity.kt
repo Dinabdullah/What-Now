@@ -30,12 +30,10 @@ class LoginActivity : AppCompatActivity() {
 
         auth = Firebase.auth
 
-        // Check if the user is already logged in
         val prefs = getSharedPreferences("user_data", MODE_PRIVATE)
         val isLoggedIn = prefs.getBoolean("isLoggedIn", false)
 
         if (isLoggedIn) {
-            // Redirect to MainActivity and finish this activity
             startActivity(Intent(this, MainActivity::class.java))
             finish()
             return
@@ -71,7 +69,6 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     val user = auth.currentUser
                     if (user != null && user.isEmailVerified) {
-                        // Save login state in SharedPreferences
                         val prefs = getSharedPreferences("user_data", MODE_PRIVATE)
                         val editor = prefs.edit()
                         editor.putBoolean("isLoggedIn", true)

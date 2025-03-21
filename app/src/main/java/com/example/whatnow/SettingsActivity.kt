@@ -24,7 +24,7 @@ class SettingsActivity : AppCompatActivity() {
         sharedPreferences = getSharedPreferences("app_settings", MODE_PRIVATE)
 
         val userName = intent.getStringExtra("username")
-        val name = sharedPreferences.getString("user_name", userName)
+        val name = sharedPreferences.getString("username", userName)
         val imageUri = intent.getStringExtra("image_uri")
         binding.tvSettingsUsername.text = name
 
@@ -40,8 +40,9 @@ class SettingsActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         // Refresh name when returning from ProfileActivity
+        val userName = intent.getStringExtra("username")
         val prefs = getSharedPreferences("user_data", Context.MODE_PRIVATE)
-        val name = prefs.getString("user_name", "No Name")
+        val name = prefs.getString("username", userName)
         binding.tvSettingsUsername.text = name
     }
 
@@ -101,7 +102,7 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun setupProfileSection() {
-        val userPrefs = getSharedPreferences("UserData", MODE_PRIVATE)
+        val userPrefs = getSharedPreferences("user_data", MODE_PRIVATE)
         val username = userPrefs.getString("username", "User Name")
 
         binding.tvSettingsUsername.text = username
