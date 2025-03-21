@@ -9,17 +9,19 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.example.whatnow.databinding.ActivityProfileBinding
 import com.google.firebase.auth.FirebaseAuth
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
-    private val PICK_IMAGE_REQUEST = 0
+    private lateinit var imagePickerLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -31,8 +33,11 @@ class ProfileActivity : AppCompatActivity() {
         binding.tvUserName.text = name
         binding.tvEmail.text = email
 
-        if (imageUri != null) {
-            binding.profileImage.setImageURI(Uri.parse(imageUri))
+        // ✅ Load image safely using Glide
+        if (!imageUri.isNullOrEmpty()) {
+            Glide.with(this)
+                .load(imageUri)
+                .into(binding.profileImage)
         }
 
         binding.tvUserName.setOnClickListener {
@@ -46,6 +51,24 @@ class ProfileActivity : AppCompatActivity() {
         binding.logoutBtn.setOnClickListener {
             logoutUser()
         }
+
+        // ✅ Fix: Register ActivityResultLauncher properly
+        imagePickerLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK && result.data != null) {
+                    val selectedImageUri = result.data?.data
+                    if (selectedImageUri != null) {
+                        Glide.with(this)
+                            .load(selectedImageUri)
+                            .into(binding.profileImage)
+
+                        // ✅ Save image URI safely
+                        val prefs = getSharedPreferences("user_data", Context.MODE_PRIVATE).edit()
+                        prefs.putString("profile_image", selectedImageUri.toString())
+                        prefs.apply()
+                    }
+                }
+            }
     }
 
     private fun showEditNameDialog() {
@@ -63,7 +86,6 @@ class ProfileActivity : AppCompatActivity() {
                 if (newName.isNotEmpty()) {
                     binding.tvUserName.text = newName
 
-                    // ✅ تحديث الاسم في SharedPreferences
                     val editor = prefs.edit()
                     editor.putString("username", newName)
                     editor.apply()
@@ -93,7 +115,7 @@ class ProfileActivity : AppCompatActivity() {
         val prefs = getSharedPreferences("user_data", Context.MODE_PRIVATE)
         val imageUri = prefs.getString("profile_image", null)
 
-        if (imageUri != null) {
+        if (!imageUri.isNullOrEmpty()) {
             val intent = Intent(this, FullScreenImageActivity::class.java)
             intent.putExtra("image_uri", imageUri)
             startActivity(intent)
@@ -104,23 +126,7 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun pickImageFromGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        startActivityForResult(intent, PICK_IMAGE_REQUEST)
-    }
-
-    @Deprecated("Use Activity Result API instead")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
-            val selectedImageUri = data.data
-            if (selectedImageUri != null) {
-                binding.profileImage.setImageURI(selectedImageUri)
-
-                // ✅ حفظ الصورة في SharedPreferences
-                val prefs = getSharedPreferences("user_data", Context.MODE_PRIVATE).edit()
-                prefs.putString("profile_image", selectedImageUri.toString())
-                prefs.apply()
-            }
-        }
+        imagePickerLauncher.launch(intent)
     }
 
     private fun logoutUser() {
