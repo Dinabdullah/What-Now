@@ -24,12 +24,9 @@ class ProfileActivity : AppCompatActivity() {
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val userName = intent.getStringExtra("username")
-        val mail = intent.getStringExtra("email")
-
         val prefs = getSharedPreferences("user_data", Context.MODE_PRIVATE)
-        val name = prefs.getString("user_name", userName)
-        val email = prefs.getString("user_email", mail)
+        val name = prefs.getString("username", "Unknown User")
+        val email = prefs.getString("email", "No Email")
         val imageUri = prefs.getString("profile_image", null)
 
         binding.tvUserName.text = name
@@ -46,23 +43,15 @@ class ProfileActivity : AppCompatActivity() {
         binding.profileImage.setOnClickListener {
             showImageOptionsDialog()
         }
-        binding.logoutBtn.setOnClickListener{
-            val prefs = getSharedPreferences("user_data", Context.MODE_PRIVATE).edit()
-            prefs.clear()
-            prefs.apply()
 
-            FirebaseAuth.getInstance().signOut()
-
-            val intent = Intent(this, LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-            finish()
+        binding.logoutBtn.setOnClickListener {
+            logoutUser()
         }
     }
 
     private fun showEditNameDialog() {
         val prefs = getSharedPreferences("user_data", Context.MODE_PRIVATE)
-        val currentName = prefs.getString("user_name", "")
+        val currentName = prefs.getString("username", "")
 
         val editText = EditText(this)
         editText.setText(currentName)
@@ -75,8 +64,9 @@ class ProfileActivity : AppCompatActivity() {
                 if (newName.isNotEmpty()) {
                     binding.tvUserName.text = newName
 
+                    // ✅ تحديث الاسم في SharedPreferences
                     val editor = prefs.edit()
-                    editor.putString("user_name", newName)
+                    editor.putString("username", newName)
                     editor.apply()
                 }
             }
@@ -118,7 +108,7 @@ class ProfileActivity : AppCompatActivity() {
         startActivityForResult(intent, PICK_IMAGE_REQUEST)
     }
 
-    @Deprecated("This method has been deprecated in favor of using the Activity Result API\n      which brings increased type safety via an {@link ActivityResultContract} and the prebuilt\n      contracts for common intents available in\n      {@link androidx.activity.result.contract.ActivityResultContracts}, provides hooks for\n      testing, and allow receiving results in separate, testable classes independent from your\n      activity. Use\n      {@link #registerForActivityResult(ActivityResultContract, ActivityResultCallback)}\n      with the appropriate {@link ActivityResultContract} and handling the result in the\n      {@link ActivityResultCallback#onActivityResult(Object) callback}.")
+    @Deprecated("Use Activity Result API instead")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
@@ -126,11 +116,24 @@ class ProfileActivity : AppCompatActivity() {
             if (selectedImageUri != null) {
                 binding.profileImage.setImageURI(selectedImageUri)
 
-                // Save image URI in SharedPreferences
+                // ✅ حفظ الصورة في SharedPreferences
                 val prefs = getSharedPreferences("user_data", Context.MODE_PRIVATE).edit()
                 prefs.putString("profile_image", selectedImageUri.toString())
                 prefs.apply()
             }
         }
+    }
+
+    private fun logoutUser() {
+        val prefs = getSharedPreferences("user_data", Context.MODE_PRIVATE).edit()
+        prefs.clear()
+        prefs.apply()
+
+        FirebaseAuth.getInstance().signOut()
+
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
     }
 }

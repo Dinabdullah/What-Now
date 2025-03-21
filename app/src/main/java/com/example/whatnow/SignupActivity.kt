@@ -78,7 +78,7 @@ class SignupActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     val userName = binding.userName.text.toString().trim()
-                    val sharedPref = getSharedPreferences("UserData", MODE_PRIVATE)
+                    val sharedPref = getSharedPreferences("user_data", MODE_PRIVATE)
                     val editor = sharedPref.edit()
                     editor.putBoolean("isLoggedIn", true)
                     editor.putString("username", userName)
