@@ -70,12 +70,16 @@ Build and run the app on an emulator or a physical device.
   <img src= "https://github.com/user-attachments/assets/bfc03856-4cf5-4879-833c-b20b2c05793a"alt="Image 1" width="20%"" />
 </p>
 <p>
-  <img src= "https://github.com/user-attachments/assets/3d108758-fdb1-4f19-bcf4-7c6a73146b8f"alt="Image 1" width="20%"" />
-  <img src="https://github.com/user-attachments/assets/a2bd5118-1393-41e2-9569-8d2983da7185"alt="Image 2" width="20%" />
+  <img src= "https://github.com/user-attachments/assets/42ff1fff-26dc-41e1-b317-aea13bd5d96e" alt="Image 1" width="20%"" />
+  <img src="https://github.com/user-attachments/assets/006ba377-1568-403e-91cf-3d1b575451fa" alt="Image 2" width="20%" />
 </p>
 <p>
-  <img src= "https://github.com/user-attachments/assets/1cfb0f49-11a3-4b31-b0bf-512adff71270"alt="Image 1" width="20%"" />
-  <img src="https://github.com/user-attachments/assets/0619bdf8-2d41-4728-b688-15558d41c98b" alt="Image 2" width="20%" />
+  <img src= "https://github.com/user-attachments/assets/5dd31623-9a0e-43e0-a925-1829d639a3f0"alt="Image 1" width="20%"" />
+  <img src= "https://github.com/user-attachments/assets/ac483673-df66-40db-83e3-a7fb011fa3c3" alt="Image 2" width="20%" />
+</p>
+<p>
+  <img src= "https://github.com/user-attachments/assets/7bdcd06e-92f6-4e13-8944-cd7a1779174d" alt="Image 1" width="20%"" />
+  <img src= "https://github.com/user-attachments/assets/7fbc9928-7cc8-4937-9829-3b4e51344b76" alt="Image 2" width="20%" />
 </p>
 
 
