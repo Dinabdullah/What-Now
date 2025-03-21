@@ -33,7 +33,6 @@ class ProfileActivity : AppCompatActivity() {
         binding.tvUserName.text = name
         binding.tvEmail.text = email
 
-        // ✅ Load image safely using Glide
         if (!imageUri.isNullOrEmpty()) {
             Glide.with(this)
                 .load(imageUri)
@@ -52,7 +51,6 @@ class ProfileActivity : AppCompatActivity() {
             logoutUser()
         }
 
-        // ✅ Fix: Register ActivityResultLauncher properly
         imagePickerLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK && result.data != null) {
@@ -62,7 +60,6 @@ class ProfileActivity : AppCompatActivity() {
                             .load(selectedImageUri)
                             .into(binding.profileImage)
 
-                        // ✅ Save image URI safely
                         val prefs = getSharedPreferences("user_data", Context.MODE_PRIVATE).edit()
                         prefs.putString("profile_image", selectedImageUri.toString())
                         prefs.apply()
