@@ -31,7 +31,8 @@ class SettingsActivity : AppCompatActivity() {
         if (imageUri != null) {
             binding.profileIcon.setImageURI(Uri.parse(imageUri))
         }
-        setupThemeSwitch()
+
+        setupThemeSelector()
         setupCountrySelector()
         setupLanguageSelector()
         setupProfileSection()
@@ -39,24 +40,37 @@ class SettingsActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        // Refresh name when returning from ProfileActivity
         val userName = intent.getStringExtra("username")
         val prefs = getSharedPreferences("user_data", Context.MODE_PRIVATE)
         val name = prefs.getString("username", userName)
         binding.tvSettingsUsername.text = name
     }
 
-    private fun setupThemeSwitch() {
-        val isDarkMode = sharedPreferences.getBoolean("dark_mode", false)
-        binding.themeSwitch.isChecked = isDarkMode
+    private fun setupThemeSelector() {
+        val themes = mapOf(
+            "Light Mode" to AppCompatDelegate.MODE_NIGHT_NO,
+            "Dark Mode" to AppCompatDelegate.MODE_NIGHT_YES,
+            "Use Device Theme" to AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+        )
 
-        binding.themeSwitch.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        val themeList = themes.keys.toList()
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, themeList)
+        binding.themeSpinner.adapter = adapter
+
+        val savedTheme = sharedPreferences.getInt("app_theme", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        val selectedIndex = themeList.indexOfFirst { themes[it] == savedTheme }
+        if (selectedIndex != -1) {
+            binding.themeSpinner.setSelection(selectedIndex)
+        }
+
+        binding.saveThemeButton.setOnClickListener {
+            val selectedTheme = binding.themeSpinner.selectedItem.toString()
+            val selectedThemeMode = themes[selectedTheme] ?: AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+
+            if (selectedThemeMode != savedTheme) {
+                sharedPreferences.edit().putInt("app_theme", selectedThemeMode).apply()
+                AppCompatDelegate.setDefaultNightMode(selectedThemeMode)
             }
-            sharedPreferences.edit().putBoolean("dark_mode", isChecked).apply()
         }
     }
 
@@ -66,6 +80,7 @@ class SettingsActivity : AppCompatActivity() {
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, countryList)
         binding.countrySpinner.adapter = adapter
 
+        // Retrieve saved country setting
         val savedCountry = sharedPreferences.getString("news_country", "us") ?: "us"
         val selectedIndex = countryList.indexOfFirst { countries[it] == savedCountry }
         if (selectedIndex != -1) {
@@ -74,14 +89,20 @@ class SettingsActivity : AppCompatActivity() {
 
         binding.saveCountryButton.setOnClickListener {
             val selectedCountry = binding.countrySpinner.selectedItem.toString()
-            sharedPreferences.edit().putString("news_country", countries[selectedCountry]).apply()
+            val selectedCountryCode = countries[selectedCountry] ?: "us"
 
-            val intent = Intent(this, MainActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-            finish()
+            if (selectedCountryCode != savedCountry) {
+                sharedPreferences.edit().putString("news_country", selectedCountryCode).apply()
+
+                // ✅ Restart the activity to apply changes properly
+                val intent = Intent(this, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish()
+            }
         }
     }
+
 
     private fun setupLanguageSelector() {
         val languages = mapOf("English" to "en", "العربية" to "ar")
@@ -89,7 +110,7 @@ class SettingsActivity : AppCompatActivity() {
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, languageList)
         binding.languageSpinner.adapter = adapter
 
-        val savedLanguage = sharedPreferences.getString("app_language", "en")
+        val savedLanguage = sharedPreferences.getString("app_language", "en") ?: "en"
         val selectedIndex = languageList.indexOfFirst { languages[it] == savedLanguage }
         if (selectedIndex != -1) {
             binding.languageSpinner.setSelection(selectedIndex)
@@ -97,7 +118,12 @@ class SettingsActivity : AppCompatActivity() {
 
         binding.saveLanguageButton.setOnClickListener {
             val selectedLanguage = binding.languageSpinner.selectedItem.toString()
-            setLocale(languages[selectedLanguage]!!)
+            val selectedLanguageCode = languages[selectedLanguage] ?: "en"
+
+            if (selectedLanguageCode != savedLanguage) {
+                sharedPreferences.edit().putString("app_language", selectedLanguageCode).apply()
+                setLocale(selectedLanguageCode)
+            }
         }
     }
 
@@ -119,6 +145,14 @@ class SettingsActivity : AppCompatActivity() {
         baseContext.resources.updateConfiguration(config, baseContext.resources.displayMetrics)
 
         sharedPreferences.edit().putString("app_language", languageCode).apply()
-        recreate()
+
+
+        val savedTheme = sharedPreferences.getInt("app_theme", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        AppCompatDelegate.setDefaultNightMode(savedTheme)
+
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
     }
 }

@@ -11,5 +11,7 @@
     <string name="save_country">Save Country</string>
     <string name="select_app_language">Select App Language</string>
     <string name="save_language">Save Language</string>
+    <string name="save_theme">Save Theme</string>
+    <string name="select_app_theme">Select App theme</string>
 
 </resources>

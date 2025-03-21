@@ -7,7 +7,12 @@
         <item name="android:textSize">18sp</item>
     </style>
 
+    <style name="BGstyle">
+        <item name="background">@drawable/bg</item>
+    </style>
+
     <style name="SettingsStyle">
+        <item name="fontFamily">@font/poppins_bold</item>
         <item name="android:textSize">18sp</item>
     </style>
 </resources>
