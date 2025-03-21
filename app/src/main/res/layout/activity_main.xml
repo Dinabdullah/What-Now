@@ -138,7 +138,6 @@
                 android:layout_height="80dp"
                 android:layout_gravity="bottom"
                 android:elevation="10dp"
-                android:outlineAmbientShadowColor="@color/blue"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

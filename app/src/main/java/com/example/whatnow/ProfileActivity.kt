@@ -33,7 +33,6 @@ class ProfileActivity : AppCompatActivity() {
         binding.tvUserName.text = name
         binding.tvEmail.text = email
 
-        // ✅ Load image safely using Glide
         if (!imageUri.isNullOrEmpty()) {
             Glide.with(this)
                 .load(imageUri)
@@ -52,7 +51,6 @@ class ProfileActivity : AppCompatActivity() {
             logoutUser()
         }
 
-        // ✅ Fix: Register ActivityResultLauncher properly
         imagePickerLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK && result.data != null) {
@@ -62,7 +60,6 @@ class ProfileActivity : AppCompatActivity() {
                             .load(selectedImageUri)
                             .into(binding.profileImage)
 
-                        // ✅ Save image URI safely
                         val prefs = getSharedPreferences("user_data", Context.MODE_PRIVATE).edit()
                         prefs.putString("profile_image", selectedImageUri.toString())
                         prefs.apply()
@@ -98,31 +95,17 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun showImageOptionsDialog() {
-        val options = arrayOf("View Photo", "Edit Photo")
+        val options = arrayOf( "Edit Photo")
 
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Profile Photo")
         builder.setItems(options) { _, which ->
-            when (which) {
-                0 -> viewFullScreenImage() // View Photo
-                1 -> pickImageFromGallery() // Edit Photo
-            }
+            pickImageFromGallery() // Edit Photo
+
         }
         builder.show()
     }
 
-    private fun viewFullScreenImage() {
-        val prefs = getSharedPreferences("user_data", Context.MODE_PRIVATE)
-        val imageUri = prefs.getString("profile_image", null)
-
-        if (!imageUri.isNullOrEmpty()) {
-            val intent = Intent(this, FullScreenImageActivity::class.java)
-            intent.putExtra("image_uri", imageUri)
-            startActivity(intent)
-        } else {
-            Toast.makeText(this, "No image available", Toast.LENGTH_SHORT).show()
-        }
-    }
 
     private fun pickImageFromGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
