@@ -9,8 +9,6 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.EditText
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.whatnow.databinding.ActivityProfileBinding
 import com.example.whatnow.profile.FullScreenImageActivity
@@ -18,20 +16,17 @@ import com.google.firebase.auth.FirebaseAuth
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
-    private lateinit var imagePickerLauncher: ActivityResultLauncher<Intent>
-
+    private val PICK_IMAGE_REQUEST = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val userName = intent.getStringExtra("username")
-        val mail = intent.getStringExtra("email")
-
         val prefs = getSharedPreferences("user_data", Context.MODE_PRIVATE)
-        val name = prefs.getString("username", userName)
-        val email = prefs.getString("email", mail)
+        val name = prefs.getString("username", "Unknown User")
+        val email = prefs.getString("email", "No Email")
         val imageUri = prefs.getString("profile_image", null)
 
         binding.tvUserName.text = name
@@ -48,40 +43,15 @@ class ProfileActivity : AppCompatActivity() {
         binding.profileImage.setOnClickListener {
             showImageOptionsDialog()
         }
+
         binding.logoutBtn.setOnClickListener {
-            val prefs = getSharedPreferences("user_data", Context.MODE_PRIVATE).edit()
-            prefs.clear()
-            prefs.apply()
-
-            FirebaseAuth.getInstance().signOut()
-
-            val intent = Intent(this, LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-            finish()
+            logoutUser()
         }
-        imagePickerLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                if (result.resultCode == Activity.RESULT_OK && result.data != null) {
-                    val selectedImageUri = result.data?.data
-                    if (selectedImageUri != null) {
-                        binding.profileImage.setImageURI(selectedImageUri)
-
-                        val prefs = getSharedPreferences("user_data", Context.MODE_PRIVATE).edit()
-                        prefs.putString("profile_image", selectedImageUri.toString())
-                        prefs.apply()
-                    }
-                }
-            }
-        binding.profileImage.setOnClickListener {
-            showImageOptionsDialog()
-        }
-
     }
 
     private fun showEditNameDialog() {
         val prefs = getSharedPreferences("user_data", Context.MODE_PRIVATE)
-        val currentName = prefs.getString("user_name", "")
+        val currentName = prefs.getString("username", "")
 
         val editText = EditText(this)
         editText.setText(currentName)
@@ -94,8 +64,9 @@ class ProfileActivity : AppCompatActivity() {
                 if (newName.isNotEmpty()) {
                     binding.tvUserName.text = newName
 
+                    // ✅ تحديث الاسم في SharedPreferences
                     val editor = prefs.edit()
-                    editor.putString("user_name", newName)
+                    editor.putString("username", newName)
                     editor.apply()
                 }
             }
@@ -134,8 +105,35 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun pickImageFromGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        imagePickerLauncher.launch(intent)
+        startActivityForResult(intent, PICK_IMAGE_REQUEST)
     }
 
+    @Deprecated("Use Activity Result API instead")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
+            val selectedImageUri = data.data
+            if (selectedImageUri != null) {
+                binding.profileImage.setImageURI(selectedImageUri)
 
+                // ✅ حفظ الصورة في SharedPreferences
+                val prefs = getSharedPreferences("user_data", Context.MODE_PRIVATE).edit()
+                prefs.putString("profile_image", selectedImageUri.toString())
+                prefs.apply()
+            }
+        }
+    }
+
+    private fun logoutUser() {
+        val prefs = getSharedPreferences("user_data", Context.MODE_PRIVATE).edit()
+        prefs.clear()
+        prefs.apply()
+
+        FirebaseAuth.getInstance().signOut()
+
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
+    }
 }
