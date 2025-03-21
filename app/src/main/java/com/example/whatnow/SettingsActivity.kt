@@ -94,7 +94,6 @@ class SettingsActivity : AppCompatActivity() {
             if (selectedCountryCode != savedCountry) {
                 sharedPreferences.edit().putString("news_country", selectedCountryCode).apply()
 
-                // ✅ Restart the activity to apply changes properly
                 val intent = Intent(this, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
@@ -153,6 +152,6 @@ class SettingsActivity : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
-        finish()
+        finish() //finish
     }
 }
